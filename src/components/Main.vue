@@ -14,10 +14,11 @@
         :key="index"
         v-for="(m, index) in markers"
         :position="m.position"
+        :id="m.position.id"
         :clickable="true"
         :draggable="false"
         :icon="{url:'./static/marker.png'}"
-        @click="center=m.position"
+        @click="getStationInfo(id)"
       ></gmap-marker>
 
       </gmap-map>
@@ -29,7 +30,7 @@
     </div>
 
     <div class="cork-info">
-      <span><img v-bind:src="'./static/icon-station.png'">31 Stations</span><span><img v-bind:src="'./static/icon-bike.png'">330 Bikes</span>
+      <img v-bind:src="'./static/icon-station.png'"><span v-text="numStations"></span><img v-bind:src="'./static/icon-bike.png'"><span v-text="numBikes"></span>
     </div>
   </div>
 
@@ -40,10 +41,15 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 
 export default {
   name: 'Main',
+
   data () {
     return{
       msg: 'Cork Bikes Real-Time App',
       selectedStationName: 'Station Information',
+      numStations: '31 Stations',
+      numBikes: '330 Bikes',
+      stationId: '',
+      id: '',
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
         }, {
@@ -108,6 +114,13 @@ export default {
           position: {id: 2032, lat: 51.90196195, lng: -8.45821512}
       }]
     }
+  },
+
+  methods: {
+      getStationInfo: function(stationId){
+        this.stationId = stationId;
+        console.log(this.stationId);
+      }
   }
 }
 
@@ -132,10 +145,6 @@ li {
 
 a {
   color: #42b983;
-}
-
-body {
-  overflow: hidden;
 }
 
 .map {
@@ -169,14 +178,13 @@ body {
   top: -400px;
 }
 
-.cork-info span {
-  margin-left: 15px;
-}
+
 
 .cork-info img {
   height: 75px;
   width: 75px;
   vertical-align: middle;
+  margin-left: 10px;
   margin-right: 5px;
 }
 </style>
