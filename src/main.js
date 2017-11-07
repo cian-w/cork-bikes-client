@@ -7,16 +7,15 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBVKAk6fbxz_FnVBiWEUEFFor9a6eb2N8A'
+  }
+});
+
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
   components: { App }
 })
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyBVKAk6fbxz_FnVBiWEUEFFor9a6eb2N8A'
-  }
-});

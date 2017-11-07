@@ -8,11 +8,24 @@
         :zoom="12"
         map-type-id="roadmap"
         style="width: 100%; height: 500px"
-      ></gmap-map>
+      >
+
+      <gmap-marker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="m.position"
+        :clickable="true"
+        :draggable="false"
+        :icon="{url:'./static/marker.png'}"
+        @click="center=m.position"
+      ></gmap-marker>
+
+      </gmap-map>
+
     </div>
 
     <div class="starred">
-      <div class="starred-title">My Favourite Stations</div>
+      <div class="starred-title">{{ selectedStationName }}</div>
     </div>
   </div>
 
@@ -24,8 +37,14 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 export default {
   name: 'Main',
   data () {
-    return {
-      msg: 'Cork Bikes Real-Time App'
+    return{
+      msg: 'Cork Bikes Real-Time App',
+      selectedStationName: 'Station Information',
+      markers: [{
+          position: {lat: 51.8969, lng: -8.4863}
+        }, {
+          position: {lat: 51.8969, lng: -8.4863}
+      }]
     }
   }
 }
@@ -66,7 +85,7 @@ a {
 .starred {
   position: relative;
   left: 65%;
-  top: -496px;
+  top: -480px;
   height: 500px;
   width: 25%;
   -webkit-box-shadow: 0px 2px 12px 0px rgba(186,186,186,1);
