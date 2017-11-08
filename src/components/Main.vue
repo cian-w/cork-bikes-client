@@ -24,12 +24,28 @@
 
     </div>
 
-    <div class="starred">
-      <div class="starred-title">{{ selectedStation.name }}</div>
-      <div class="info">
-        <p>Bikes Available {{selectedStation.bikesAvailable}}</p><br>
-        <p>Docks Available {{selectedStation.docksAvailable}}</p>
+    <div class="selected-station">
+      <div class="station-title">
+        <b>{{ selectedStation.name }}</b>
       </div>
+      <template v-if="hasSelected">
+        <div class="station-info">
+          <div class="station-info-bikesavailable">
+            <span class="station-info-value">{{selectedStation.bikesAvailable}}</span><br>
+            <span class="station-info-name"><b>Bikes Available</b></span>
+          </div>
+
+          <div class="station-info-docssavailable">
+            <span class="station-info-value">{{selectedStation.docksAvailable}}</span><br>
+            <span class="station-info-name"><b>Spaces Available</b></span>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="instructions">
+          Each marker on the map represents a station. <br><br> Please click on one to show it's information.
+        </div>
+      </template>
     </div>
 
     <div class="cork-info">
@@ -51,10 +67,10 @@ export default {
       msg: 'Cork Bikes Real-Time App',
       selectedStation: {
         name: 'Station Information',
-
       },
       numStations: '31 Stations',
       numBikes: '330 Bikes',
+      hasSelected: false,
       stationId: 0,
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
@@ -125,13 +141,14 @@ export default {
   methods: {
       setStationInfo(index) {
         this.stationId = this.markers[index].position.id;
-        console.log(this.stationId);
+
         fetch(`http://localhost:3000/station/${this.stationId}`,{
           method: 'GET'
         }).then((response) => {
           return response.json();
         }).then((data) => {
           this.selectedStation = data;
+          this.hasSelected = true;
         });
       }
   }
@@ -171,7 +188,7 @@ a {
   box-shadow: 0px 0px 13px 0px rgba(184,175,184,1);
 }
 
-.starred {
+.selected-station {
   position: relative;
   left: 65%;
   top: -480px;
@@ -182,20 +199,54 @@ a {
   box-shadow: 0px 2px 12px 0px rgba(186,186,186,1);
 }
 
-.starred-title {
+.station-title {
+  position: relative;
+  top: 40px;
+  font-size: 24px;
+}
+
+.station-info {
+  position: relative;
+  top: 80px;
+  left: 8%;
+  font-size: 19px;
+  color: #817e81;
+}
+
+.station-info-bikesavailable {
+  float: left;
+}
+
+.station-info-docksavailable {
+  float: right;
+}
+
+.station-info-value {
+  font-size: 34px;
+  color: #00e600;
+}
+
+.instructions {
+  position: relative;
+  top: 160px;
   font-size: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .cork-info {
   position: relative;
   top: -400px;
+  font-size: 26px;
 }
 
-
+.cork-info span {
+  margin-right: 40px;
+}
 
 .cork-info img {
-  height: 75px;
-  width: 75px;
+  height: 85px;
+  width: 85px;
   vertical-align: middle;
   margin-left: 10px;
   margin-right: 5px;
