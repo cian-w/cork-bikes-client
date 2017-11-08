@@ -7,7 +7,7 @@
         :center="{lat:51.898374, lng:-8.474151}"
         :zoom="15"
         map-type-id="roadmap"
-        style="width: 100%; height: 500px"
+        style="width: 100%; height: 550px"
       >
 
       <gmap-marker
@@ -39,6 +39,14 @@
             <span class="station-info-value">{{selectedStation.docksAvailable}}</span><br>
             <span class="station-info-name"><b>Spaces Available</b></span>
           </div>
+
+          <div class="chart">
+            <line-chart
+               :width="400"
+               :height="200"
+               >
+            </line-chart>
+          </div>
         </div>
       </template>
       <template v-else>
@@ -57,14 +65,27 @@
 
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps';
+import { Line } from 'vue-chartjs'
+
 // import markers from '@/static/markers';
 
 export default {
   name: 'Main',
+  extends: Line,
 
   data () {
     return{
       msg: 'Cork Bikes Real-Time App',
+      datacollection: {
+        labels: ['January', 'February'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: [40, 20]
+          }
+        ]
+      },
       selectedStation: {
         name: 'Station Information',
       },
@@ -138,6 +159,10 @@ export default {
     }
   },
 
+  mounted () {
+    this.renderChart(this.datacollection, {responsive: true, maintainAspectRatio: false})
+  },
+
   methods: {
       setStationInfo(index) {
         this.stationId = this.markers[index].position.id;
@@ -180,9 +205,9 @@ a {
 .map {
   position: relative;
   top: 20px;
-  left: 10%;
+  left: 5%;
   width: 50%;
-  height: 500px;
+  height: 550px;
   -webkit-box-shadow: 0px 0px 13px 0px rgba(184,175,184,1);
   -moz-box-shadow: 0px 0px 13px 0px rgba(184,175,184,1);
   box-shadow: 0px 0px 13px 0px rgba(184,175,184,1);
@@ -190,10 +215,10 @@ a {
 
 .selected-station {
   position: relative;
-  left: 65%;
-  top: -480px;
-  height: 500px;
-  width: 25%;
+  left: 60%;
+  top: -530px;
+  height: 550px;
+  width: 35%;
   -webkit-box-shadow: 0px 2px 12px 0px rgba(186,186,186,1);
   -moz-box-shadow: 0px 2px 12px 0px rgba(186,186,186,1);
   box-shadow: 0px 2px 12px 0px rgba(186,186,186,1);
@@ -207,8 +232,8 @@ a {
 
 .station-info {
   position: relative;
-  top: 80px;
-  left: 8%;
+  top: 70px;
+  left: 13%;
   font-size: 19px;
   color: #817e81;
 }
@@ -234,9 +259,17 @@ a {
   margin-right: 10px;
 }
 
+.chart {
+  position: relative;
+  left: -10%;
+  top: 15px;
+  height: 350px;
+  width: 94%;
+}
+
 .cork-info {
   position: relative;
-  top: -400px;
+  top: -460px;
   font-size: 26px;
 }
 
