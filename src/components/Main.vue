@@ -14,11 +14,10 @@
         :key="index"
         v-for="(m, index) in markers"
         :position="m.position"
-        :id="m.position.id"
         :clickable="true"
         :draggable="false"
         :icon="{url:'./static/marker.png'}"
-        @click="getStationInfo(id)"
+        @click="setStationInfo(index)"
       ></gmap-marker>
 
       </gmap-map>
@@ -26,7 +25,11 @@
     </div>
 
     <div class="starred">
-      <div class="starred-title">{{ selectedStationName }}</div>
+      <div class="starred-title">{{ selectedStation.name }}</div>
+      <div class="info">
+        <p>Bikes Available {{selectedStation.bikesAvailable}}</p><br>
+        <p>Docks Available {{selectedStation.docksAvailable}}</p>
+      </div>
     </div>
 
     <div class="cork-info">
@@ -38,6 +41,7 @@
 
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps';
+// import markers from '@/static/markers';
 
 export default {
   name: 'Main',
@@ -45,11 +49,13 @@ export default {
   data () {
     return{
       msg: 'Cork Bikes Real-Time App',
-      selectedStationName: 'Station Information',
+      selectedStation: {
+        name: 'Station Information',
+
+      },
       numStations: '31 Stations',
       numBikes: '330 Bikes',
       stationId: 0,
-      id: '',
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
         }, {
@@ -117,13 +123,16 @@ export default {
   },
 
   methods: {
-      getStationInfo: function(stationId){
-        fetch('http://46.101.53.169:3000/station/2002',{
-          method: 'GET'
-        })
-        .then(console.log(stationId))
-        this.stationId = stationId;
+      setStationInfo(index) {
+        this.stationId = this.markers[index].position.id;
         console.log(this.stationId);
+        fetch(`http://localhost:3000/station/${this.stationId}`,{
+          method: 'GET'
+        }).then((response) => {
+          return response.json();
+        }).then((data) => {
+          this.selectedStation = data;
+        });
       }
   }
 }
