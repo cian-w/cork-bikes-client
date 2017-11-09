@@ -42,7 +42,7 @@
 
           <div class="chart">
             <div class="statistics-title">
-              {{getDay()}}
+              {{setDay()}}
             </div>
             <line-chart
                :width="400"
@@ -81,16 +81,6 @@ export default {
   data () {
     return{
       msg: 'Cork Bikes Real-Time App',
-      datacollection: {
-        labels: ['January', 'February'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 20]
-          }
-        ]
-      },
       selectedStation: {
         name: 'Station Information',
       },
@@ -100,6 +90,7 @@ export default {
       stationId: 0,
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       day: '',
+      dayIndex: '',
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
         }, {
@@ -167,6 +158,8 @@ export default {
   },
 
   methods: {
+
+      // Set the selected station information.
       setStationInfo(index) {
         this.stationId = this.markers[index].position.id;
 
@@ -180,10 +173,23 @@ export default {
         });
       },
 
-      getDay(){
-        this.day = this.days[new Date().getDay()]
+      // Set the day to display for statistics title.
+      setDay(){
+        this.dayIndex = new Date().getDay();
+        this.day = this.days[this.dayIndex];
 
         return this.day + "'s Statistics"
+      },
+
+      // Set the statistics.
+      setStationStats(){
+         fetch(`http://localhost:3000/station/stats/${this.dayIndex}/${this.stationId}`,{
+           method: 'GET'
+         }).then((response) => {
+           return response.json();
+         }).then((data) => {
+
+         });
       }
   }
 }
