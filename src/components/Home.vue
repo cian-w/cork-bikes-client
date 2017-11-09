@@ -41,6 +41,9 @@
           </div>
 
           <div class="chart">
+            <div class="statistics-title">
+              {{getDay()}}
+            </div>
             <line-chart
                :width="400"
                :height="200"
@@ -65,13 +68,15 @@
 
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps';
-import { Line } from 'vue-chartjs'
+import Chart from './Chart'
 
 // import markers from '@/static/markers';
 
 export default {
   name: 'Main',
-  extends: Line,
+  components: {
+    'line-chart': Chart
+  },
 
   data () {
     return{
@@ -93,6 +98,8 @@ export default {
       numBikes: '330 Bikes',
       hasSelected: false,
       stationId: 0,
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      day: '',
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
         }, {
@@ -159,10 +166,6 @@ export default {
     }
   },
 
-  mounted () {
-    this.renderChart(this.datacollection, {responsive: true, maintainAspectRatio: false})
-  },
-
   methods: {
       setStationInfo(index) {
         this.stationId = this.markers[index].position.id;
@@ -175,6 +178,12 @@ export default {
           this.selectedStation = data;
           this.hasSelected = true;
         });
+      },
+
+      getDay(){
+        this.day = this.days[new Date().getDay()]
+
+        return this.day + "'s Statistics"
       }
   }
 }
@@ -262,7 +271,7 @@ a {
 .chart {
   position: relative;
   left: -10%;
-  top: 15px;
+  top: 50px;
   height: 350px;
   width: 94%;
 }
