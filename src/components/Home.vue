@@ -54,7 +54,9 @@
       </template>
       <template v-else>
         <div class="instructions">
-          Each marker on the map represents a station. <br><br> Please click on one to show it's information.
+          Hey &#128075; <br><br>
+          Each marker <img v-bind:src="'./static/marker.png'" /> on the map represents a station. <br><br>
+          Please click on one to show the stations information &#128202;
         </div>
       </template>
     </div>
@@ -171,6 +173,8 @@ export default {
           this.selectedStation = data;
           this.hasSelected = true;
         });
+
+        this.setStationStats()
       },
 
       // Set the day to display for statistics title.
@@ -183,12 +187,12 @@ export default {
 
       // Set the statistics.
       setStationStats(){
-         fetch(`http://localhost:3000/station/stats/${this.dayIndex}/${this.stationId}`,{
+         fetch(`http://localhost:3000/station/stats/${this.stationId}`,{
            method: 'GET'
          }).then((response) => {
            return response.json();
          }).then((data) => {
-
+           console.log(data);
          });
       }
   }
@@ -220,7 +224,7 @@ a {
 .map {
   position: relative;
   top: 20px;
-  left: 5%;
+  left: 45%;
   width: 50%;
   height: 550px;
   -webkit-box-shadow: 0px 0px 13px 0px rgba(184,175,184,1);
@@ -230,7 +234,7 @@ a {
 
 .selected-station {
   position: relative;
-  left: 60%;
+  left: 5%;
   top: -530px;
   height: 550px;
   width: 35%;
