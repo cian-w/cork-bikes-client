@@ -45,7 +45,6 @@
               {{setDay()}}
             </div>
             <line-chart
-               :data="this.avgBikes"
                :width="400"
                :height="200"
                >
