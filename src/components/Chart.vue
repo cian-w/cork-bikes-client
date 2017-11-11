@@ -12,14 +12,13 @@
           datasets: [
             {
               label: 'Avg Bikes Available',
-              backgroundColor: 'rgba(47, 198, 218, 0.3)',
+              backgroundColor: 'rgba(47, 198, 218, 0.4)',
               borderColor: '#6897e2',
-              pointColor: 'black',
               data: this.avgBikes
             },
             {
               label: 'Avg Spaces Available',
-              backgroundColor: 'rgb(255, 0, 0, 0.4)',
+              backgroundColor: 'rgb(196, 13, 47)',
               borderColor: 'rgb(242, 111, 111)',
               data: this.avgSpaces
             }

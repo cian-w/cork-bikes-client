@@ -253,7 +253,7 @@ a {
 .station-title {
   position: relative;
   top: 40px;
-  font-size: 24px;
+  font-size: 26px;
 }
 
 .station-info {
@@ -274,7 +274,7 @@ a {
 
 .station-info-value {
   font-size: 34px;
-
+  color: #000000;
 }
 
 .instructions {
