@@ -4,10 +4,9 @@
 
   export default ({
     extends: Line,
-    props: ['data'],
+    props: ['avgBikes', 'avgSpaces'],
     methods: {
       renderLineChart() {
-        console.log('rendering');
         this.renderChart({
           labels: ['9AM', '11AM', '1PM', '3PM', '5PM', '7PM', '9PM'],
           datasets: [
@@ -16,13 +15,13 @@
               backgroundColor: 'rgba(47, 198, 218, 0.3)',
               borderColor: '#6897e2',
               pointColor: 'black',
-              data: this.data
+              data: this.avgBikes
             },
             {
               label: 'Avg Spaces Available',
               backgroundColor: 'rgb(255, 0, 0, 0.4)',
               borderColor: 'rgb(242, 111, 111)',
-              data: this.data
+              data: this.avgSpaces
             }
           ]
         })
@@ -32,8 +31,9 @@
       this.renderLineChart();
     },
     watch: {
-      data() {
+      avgBikes() {
         this.renderLineChart();
+        deep: true
       }
     },
   });

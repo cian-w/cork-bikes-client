@@ -45,7 +45,8 @@
               {{setDay()}}
             </div>
             <line-chart
-               :data="this.bikeStats.avgBikes"
+               :avgBikes="this.bikeStats.avgBikes"
+               :avgSpaces="this.bikeStats.avgSpaces"
                :width="400"
                :height="200"
                >
