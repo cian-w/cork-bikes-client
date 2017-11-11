@@ -45,6 +45,7 @@
               {{setDay()}}
             </div>
             <line-chart
+               :data="this.bikeStats.avgBikes"
                :width="400"
                :height="200"
                >
@@ -93,8 +94,7 @@ export default {
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       day: '',
       dayIndex: '',
-      avgBikes: [],
-      avgSpaces: [],
+      bikeStats: {},
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
         }, {
@@ -194,8 +194,8 @@ export default {
          }).then((response) => {
            return response.json();
          }).then((data) => {
-           this.avgBikes = data.avgBikes;
-           this.avgSpaces = data.avgSpaces;
+           this.bikeStats.avgBikes = data.avgBikes;
+           this.bikeStats.avgSpaces = data.avgSpaces;
          });
       }
   }
