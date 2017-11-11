@@ -95,7 +95,10 @@ export default {
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       day: '',
       dayIndex: '',
-      bikeStats: {},
+      bikeStats: {
+        avgBikes: [0],
+        avgSpaces: [0]
+      },
       markers: [{
           position: {id: 2001, lat: 51.893604, lng: -8.494174}
         }, {
@@ -271,7 +274,7 @@ a {
 
 .station-info-value {
   font-size: 34px;
-  color: #00e600;
+
 }
 
 .instructions {
