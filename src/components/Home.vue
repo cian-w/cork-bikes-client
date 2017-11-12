@@ -171,7 +171,7 @@ export default {
       setStationInfo(index) {
         this.stationId = this.markers[index].position.id;
 
-        fetch(`http://localhost:3000/station/${this.stationId}`,{
+        fetch(`http://46.101.53.169:3000/station/${this.stationId}`,{
           method: 'GET'
         }).then((response) => {
           return response.json();
@@ -193,7 +193,7 @@ export default {
 
       // Set the statistics.
       setStationStats(){
-         fetch(`http://localhost:3000/station/stats/${this.stationId}`,{
+         fetch(`http://46.101.53.169:3000/station/stats/${this.stationId}`,{
            method: 'GET'
          }).then((response) => {
            return response.json();
